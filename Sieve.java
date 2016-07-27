@@ -5,15 +5,15 @@ public class Sieve {
     private static int _max = 0;
 
     /**
-     * "Debug" version of PrintSieve.  This will show all numbers
+     * "Debug" version of printSieve.  This will show all numbers
      * along with their T/F mark of primality.
      * @param results - list of ints from 1 to n
      * @param prime - boolean array indicating primality
      */
     
-    public static void printsieve(int[] results, boolean[] prime) {
+    public static void printSieveDebug(int[] results, boolean[] prime) {
 	    System.out.print("> ");
-	    char c = ' ';
+	    char ch = ' ';
 
 	    // Just loop through the array and print the values.
 	    // Put a (T) after each one if it has been marked
@@ -21,8 +21,8 @@ public class Sieve {
 	    // composite (not prime).
 	    
 	    for (int j = 0; j < results.length;) {
-		c = prime[j] ? 'T' : 'F';
-		System.out.print(results[j] + "(" + c + ") ");
+		ch = prime[j] ? 'T' : 'F';
+		System.out.print(results[j] + "(" + ch + ") ");
 		j++;
 	    }
 	    System.out.println();
@@ -34,29 +34,22 @@ public class Sieve {
      * @param results array of ints to print out
      */
     
-    public static void PrintSieve(int[] results) {
+    public static void printSieve(int[] results) {
 
-	// As long as there are elements in the array,
-	// print it.  Otherwise, print "BLANK".
-	
-	if (results.length == 0 || results != null) {
 	    System.out.print("> ");
 	    for (int j = 1; j < results.length;) {
 		System.out.print(results[j] + " ");
 		j++;
 	    }
-	} else {
-	    System.out.println("BLANK");
-	}
     }
 
-    /**
-     * @param s the size of the array to return
+    /** Method that returns an all true array.
+     *  @param size the size of the array to return
+     *  @return returns an all true array
      */
-    
-    public static boolean[] getTrueArray(int s) {
-	boolean toReturn[] = new boolean[s];
-	for (int j = 0; j < s; j++) {
+    public static boolean[] getTrueArray(int size) {
+	boolean[] toReturn = new boolean[size];
+	for (int j = 0; j < size; j++) {
 	    toReturn[j] = true;
 	}
 	// Return an all-true array.
@@ -71,8 +64,7 @@ public class Sieve {
      * @param results an array with all ints from 1 to n
      * @return int[] the prime numbers from 1 to n 
      */
-    
-    public static int[] convertResults(int[] results, boolean prime[] ) {
+    public static int[] convertResults(int[] results, boolean[] prime ) {
 
 	// Create an ArrayList.	 If a value is true for primality,
 	// add it to the array list.
@@ -80,7 +72,7 @@ public class Sieve {
 	ArrayList<Integer> actual = new ArrayList<Integer>();
 	for (int j = 0; j < results.length; j++) {
 	    if (prime[j]) {
-		actual.add(new Integer(j + 1));
+		actual.add(Integer.valueOf(j + 1));
 	    }
 	}
 
@@ -93,7 +85,7 @@ public class Sieve {
 	// the toReturn variable is an int array, but Java will
 	// automatically convert thanks to autoboxing as long as
 	// you are using Java 1.5 or higher.
-	
+
 	int[] toReturn = new int[actual.size()];
 
 	for (int j = 0; j < actual.size(); j++) {
@@ -164,7 +156,6 @@ public class Sieve {
      */
     
     public static int[] generateSieve(int maxSize) {
-	int size = maxSize;
 	int[] toReturn = new int[maxSize];
 	for (int j = 0; j <= maxSize; j++) {
 	    if (j == 0) {
@@ -188,11 +179,10 @@ public class Sieve {
 	    if (toReturn < 1) {
 		// User did not enter a valid integer
 		throw new IllegalArgumentException();
-	    } else {
-	}
+	    } 
 	} else {
 	    // User forgot to enter an argument!  
-	    new IllegalArgumentException();
+	    throw new IllegalArgumentException();
 	}
 	return toReturn;
     }
@@ -221,7 +211,7 @@ public class Sieve {
 	
 	try {
 	    _max = calculateMax(args);
-	} catch (Exception ex) {
+	} catch (IllegalArgumentException ex) {
 	    System.out.println("You forgot to enter a valid integer (> 0)!");
 	    System.out.println("Assuming you meant to type 100...");
 	    _max = 100;
@@ -230,7 +220,7 @@ public class Sieve {
 	// Calculate sieve and print it out
 	int[] sieve = generateSieve(_max);
 	int[] results = calculateSieve(sieve);
-	PrintSieve(results);
+	printSieve(results);
     }
     
 }
